@@ -1,29 +1,41 @@
-// Variables used by Scriptable.
-// These must be at the very top of the file. Do not edit.
-// icon-color: purple; icon-glyph: magic;
-// Variables used by Scriptable.
-// These must be at the very top of the file. Do not edit.
-// icon-color: deep-purple; icon-glyph: image;
+// Defines the InvisibileBackground Object
+class InvisibleBackground {
+  constructor() {}
+  
+  static sayHi() {
+    return "Hello!";
+  }
 
-// This widget was created by Max Zeryck @mzeryck
-
-// Widgets are unique based on the name of the script.
-// const filename = Script.name() + ".jpg"
-// const files = FileManager.local()
-// const path = files.joinPath(files.documentsDirectory(), filename)
-
-module.exports.sayHi = () => {
-  return "Hello World";
+  static getImage(scriptName) {
+    let screen = await determineScreen(scriptName);
+    // console.log("determineScreen returned" + screen);
+    return screen;
+    // return "Got an Image!";
+  }
 }
 
+// Creates an instance of the InvisibleBackground Object
+let IB = new InvisibleBackground();
 
-module.exports.getImage = () => {
-  // Determine if user has taken the screenshot.
+// Defines what the object exports
+module.exports = InvisibleBackground;
+
+// module.exports = {
+//   sayHi: IB.sayHi.bind(IB),
+//   getImage: IB.getImage.bind(IB)
+// };
+
+
+async function determineScreen(scriptName) {
+  // Determine if user has taken the screenshot
   var message = "Before you start, go to your home screen and enter wiggle mode. Scroll to the empty page on the far right and take a screenshot."
   let exitOptions = ["Continue","Exit to Take Screenshot"]
   let shouldExit = await generateAlert(message,exitOptions)
   if (shouldExit) return
-  
+
+  // return "Yep, it's a screen";
+
+
   // Get screenshot and determine phone size.
   let img = await Photos.fromLibrary()
   let height = img.size.height
@@ -33,7 +45,8 @@ module.exports.getImage = () => {
     await generateAlert(message,["OK"])
     return
   }
-  
+
+
   // Prompt for widget size and position.
   message = "What size of widget are you creating?"
   let sizes = ["Small","Medium","Large"]
@@ -42,6 +55,7 @@ module.exports.getImage = () => {
   
   message = "What position will it be in?"
   message += (height == 1136 ? " (Note that your device only supports two rows of widgets, so the middle and bottom options are the same.)" : "")
+  
   
   // Determine image crop based on phone size.
   let crop = { w: "", h: "", x: "", y: "" }
@@ -76,24 +90,17 @@ module.exports.getImage = () => {
     
     // Large widgets at the bottom have the "middle" y-value.
     crop.y = position ? phone.middle : phone.top
-  }
-  
-  // Crop image and finalize the widget.
-  let imgCrop = cropImage(img, new Rect(crop.x,crop.y,crop.w,crop.h))
-  
-  // message = "Your widget background is ready. Would you like to use it in a Scriptable widget or export the image?"
-  // const exportPhotoOptions = ["Use in Scriptable","Export to Photos"]
-  // const exportPhoto = await generateAlert(message,exportPhotoOptions)
-  
 
+    // Crop image and finalize the widget.
+    let imgCrop = cropImage(img, new Rect(crop.x,crop.y,crop.w,crop.h))
+    
+    // Widgets are unique based on the name of the script.
+    const filename = scriptName
+    const files = FileManager.local()
+    const path = files.joinPath(files.documentsDirectory(), filename)
+    files.writeImage(path,imgCrop)
 
-  // if (exportPhoto) {
-  //   Photos.save(imgCrop)
-  // } else {
-  //   files.writeImage(path,imgCrop)
-  // }
-
-  return imgCrop;
+    return path;
 }
 
 
@@ -113,7 +120,7 @@ async function generateAlert(message,options) {
 }
 
 // Crop an image into the specified rect.
-function cropImage(img,rect) {
+async function cropImage(img,rect) {
    
   let draw = new DrawContext()
   draw.size = new Size(rect.width, rect.height)
@@ -123,7 +130,7 @@ function cropImage(img,rect) {
 }
 
 // Pixel sizes and positions for widgets on all supported phones.
-function phoneSizes() {
+async function phoneSizes() {
   let phones = {	
 	"2688": {
 			"small":  507,
@@ -260,3 +267,18 @@ function phoneSizes() {
 //   
 //   return widget
 // }
+
+
+
+
+
+
+// Variables used by Scriptable.
+
+
+// This widget was created by Max Zeryck @mzeryck
+
+// Widgets are unique based on the name of the script.
+// const filename = Script.name() + ".jpg"
+// const files = FileManager.local()
+// const path = files.joinPath(files.documentsDirectory(), filename)
