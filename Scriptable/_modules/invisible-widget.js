@@ -18,7 +18,11 @@ class InvisibleBackground {
 let IB = new InvisibleBackground();
 
 // Defines what the object exports
-module.exports = InvisibleBackground;
+module.exports = InvisibleBackground();
+
+
+// Try doing this, but with everything around the file
+// Don't create a class. 
 
 // module.exports = {
 //   sayHi: IB.sayHi.bind(IB),
