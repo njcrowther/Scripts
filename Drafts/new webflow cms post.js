@@ -1,12 +1,12 @@
 // See online documentation for examples
 // https://docs.getdrafts.com/docs/actions/scripting
-// This script requires the MGCheckListPrompt Library found at: 
-// Webflow API documentation can be found here: 
+// This script requires the MGCheckListPrompt Library found at: https://actions.getdrafts.com/g/10X
+// Webflow API documentation can be found here: http://developers.webflow.com/#model15
 // debug.js is optional (use it if you uncomment the console.log()). Instructions can be found here:
 // require('debug.js');
 
 // Set up Webflow CMS
-var webflowToken = "6674068aee1a48dcf990eeba7c3986d92b559c6ead4c44398c500bc5f447944c";
+var webflowToken = "<TOKEN NUMBER>";
 var collectionID = "5f5a9748a45e27c7a4e37f54";
 
 // Create a checklist prompt
