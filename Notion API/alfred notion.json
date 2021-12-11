@@ -1,0 +1,21 @@
+{ 
+	"parent": {
+     	"database_id": 'dbID'
+	},
+    "properties": {
+    	"Action Item": {
+			"title": [
+				{
+					"text": {
+						"content": "{query}"
+					}
+				}
+			]
+		},
+		"Tag": {
+			"select": {
+				"name": 'api'
+			}
+		}
+	}
+}

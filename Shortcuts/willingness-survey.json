@@ -1,0 +1,22 @@
+{
+    "1":{
+        "question":"I'm willing to do the written exercises while I read this book",
+        "rating":""
+    },
+    "2":{
+        "question":"I'm willing to do the exercises even if I am not in the mood", 
+        "rating":
+    },
+    "3":{
+        "question":"I'm willing to do them even if I feel hopeless or unmotivated", 
+        "rating":
+    },
+    "4":{
+        "question":"I'm willing to do them even if I feel overwhelmed or tired", 
+        "rating":
+    },
+    "5":{
+        "question":"I'm willing to do them even if they seem difficult at first", 
+        "rating":
+    }
+}
